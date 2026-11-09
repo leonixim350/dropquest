@@ -4,25 +4,29 @@ Aplicación web de fans, en español y adaptable a celular, para registrar progr
 
 ## Funciones
 
-- Registro de alias, cofres, horas, meta y una probabilidad hipotética.
-- Estadísticas sincronizadas con Supabase tras iniciar sesión.
-- Perfil privado por defecto; el usuario puede optar por hacerlo público.
-- Buscador de perfiles públicos y perfiles de ejemplo indicados como tales.
+- Registro manual de cofres, horas, meta personal y una probabilidad hipotética editable.
+- Estadísticas sincronizadas con Supabase tras iniciar sesión por correo.
+- Perfil privado por defecto; se puede optar por hacerlo público.
+- Buscador de perfiles públicos que aparecen conforme la comunidad se registra.
 - Check-in diario autodeclarado y contador comunitario agregado.
 - Mensajes motivacionales rotativos.
 
 ## Limitaciones importantes
 
-Epic no ofrece una API pública general que permita consultar los cofres abiertos por cualquier jugador. Los registros son ingresados por los usuarios y no se verifican con Epic. El ejemplo 1/137.500 es una hipótesis editable, no una tasa oficial ni garantía de recompensa. Los tokens del día tampoco prueban la entrega del objeto.
+Epic no ofrece una API pública general que permita consultar los cofres abiertos de cualquier jugador. Los registros son ingresados por los usuarios y no se verifican con Epic. El ejemplo 1/137.500 es una hipótesis editable, no una tasa oficial ni garantía de recompensa. Los tokens del día tampoco prueban la entrega del objeto. Los perfiles aparecen cuando una persona crea cuenta y activa la opción de perfil público.
 
 ## Arquitectura
 
 - Frontend estático `index.html`, publicado con GitHub Pages.
 - Supabase Auth por correo y Postgres con RLS.
-- `supabase-schema.sql` configura perfiles, estadísticas, reportes diarios y políticas.
-- Solo usa en el cliente el Project URL y la publishable key pública. Nunca guardar `service_role`, secretos ni contraseñas en el repo.
-- La sesión sincroniza perfil y estadísticas; sin sesión, la demo local se conserva en `localStorage`.
+- `supabase-schema.sql` documenta la estructura inicial (ya aplicada en el proyecto).
+- El cliente usa solo Project URL y publishable key pública. Nunca almacenar `service_role`, secretos ni contraseñas en el repositorio.
+- Perfil y estadísticas sincronizados al iniciar sesión. El progreso que ya estaba en ese navegador se conserva al crear la primera cuenta.
+- Sin sesión, la demo local se guarda en `localStorage`; el check-in comunitario requiere iniciar sesión.
 
 ## Operación
 
-Para cambiar el frontend, actualiza `index.html` en `main`; GitHub Pages vuelve a desplegarlo. El URL de Auth de Supabase debe permitir el sitio publicado para los correos de confirmación. Mantén RLS activo y revisa los asesores de seguridad al cambiar políticas o funciones.
+Sitio: https://leonixim350.github.io/dropquest/
+Repositorio: https://github.com/leonixim350/dropquest
+
+Para cambiar el frontend, actualiza `index.html` en `main`; GitHub Pages vuelve a desplegarlo. La URL publicada está autorizada para retorno de Supabase Auth. Mantén RLS activo y revisa los asesores de seguridad al cambiar políticas o funciones.
